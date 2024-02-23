@@ -1,0 +1,13 @@
+[Unit]
+Description=UDP Custom by XDVPN
+
+[Service]
+User=root
+Type=simple
+ExecStart=/etc/alfudp/udp-custom server
+WorkingDirectory=/etc/alfudp
+Restart=always
+RestartSec=2s
+
+[Install]
+WantedBy=default.target
