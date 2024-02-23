@@ -4,8 +4,8 @@ Description=UDP Custom by XDVPN
 [Service]
 User=root
 Type=simple
-ExecStart=/etc/alfudp/udp-custom server
-WorkingDirectory=/etc/alfudp
+ExecStart=/etc/udpssh/udp-custom server
+WorkingDirectory=/etc/udpssh
 Restart=always
 RestartSec=2s
 
