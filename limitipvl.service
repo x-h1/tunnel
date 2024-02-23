@@ -1,0 +1,11 @@
+[Unit]
+Description=Limit IP Vless By XDVPN
+ProjectAfter=network.target
+
+[Service]
+WorkingDirectory=/root
+ExecStart=/etc/xray/limitip.vless
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

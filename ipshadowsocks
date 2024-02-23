@@ -1,0 +1,47 @@
+#!/bin/bash
+function send_log(){
+    CHATID=$(grep -E "^#bot# " "/etc/bot/.bot.db" | cut -d ' ' -f 3)
+    KEY=$(grep -E "^#bot# " "/etc/bot/.bot.db" | cut -d ' ' -f 2)
+    TIME="10"
+    URL="https://api.telegram.org/bot$KEY/sendMessage"
+    TEXT="
+<code>────────────────────</code>
+<b>     ⚠️ NOTIF MULTILOGIN ⚠️</b>
+<code>────────────────────</code>
+<b>     🔐 ACCOUNT LOCKED 🔐</b> 
+<code>────────────────────</code>
+<code>Protokol   : </code><code>SDSOCK</code>
+<code>Username   : </code><code>$user</code>
+<code>Status     : </code><code>Non-active</code>
+<code>IP Limit   : </code><code>${iplimss}</code>
+<code>IP Login   : </code><code>${cekcek}</code>
+<code>────────────────────</code>
+"
+    curl -s --max-time $TIME -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT&parse_mode=html" $URL >/dev/null
+}
+echo -n > /var/log/xray/access.log
+sleep 4
+data=( `ls /etc/limit/shadowsocks/ip`);
+for user in "${data[@]}"
+do
+        uuidss=$(cat /etc/shadowsocks/.shadowsocks.db | grep $user | awk '{print $4}')
+        iplimss=$(cat /etc/limit/shadowsocks/ip/$user)
+        ehh=$(cat /var/log/xray/access.log | grep "$user" | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | sort | uniq);
+        cekcek=$(echo -e "$ehh" | wc -l);
+        if [[ $cekcek -gt $iplimss ]]; then
+            exp=$(grep -w "^###& $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
+                  sed -i "/^###& $user $exp/,/^},{/d" /etc/xray/config.json
+                  echo "#### ${user} ${exp} ${uuidss} ${iplimss}" >>/etc/shadowsocks/shadowsocks.txt
+                  systemctl restart xray >> /dev/null 2>&1
+                  sed -i "/^### $user $exp/d" /etc/shadowsocks/.shadowsocks.db
+                  send_log
+                else
+            echo ""
+        fi
+        sleep 0.1
+    done
+    
+    
+    
+    
+  

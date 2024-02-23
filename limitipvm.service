@@ -1,0 +1,11 @@
+[Unit]
+Description=Limit IP Vmess By XDVPN
+ProjectAfter=network.target
+
+[Service]
+WorkingDirectory=/root
+ExecStart=/etc/xray/limitip.vmess
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

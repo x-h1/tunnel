@@ -1,0 +1,53 @@
+#!/bin/bash
+source /root/.gh
+cd /etc/systemd/system
+wget -q -O limitvmess.service "${GITHUB_REPO}/limitvmess.service" && chmod +x limitvmess.service >/dev/null 2>&1
+wget -q -O limitvless.service "${GITHUB_REPO}/limitvless.service" && chmod +x limitvless.service >/dev/null 2>&1
+wget -q -O limittrojan.service "${GITHUB_REPO}/limittrojan.service" && chmod +x limittrojan.service >/dev/null 2>&1
+wget -q -O limitshadowsocks.service "${GITHUB_REPO}/limitshadowsocks.service" && chmod +x limitshadowsocks.service >/dev/null 2>&1
+wget -q -O limitipvm.service "${GITHUB_REPO}/limitipvm.service" && chmod +x limitipvm.service >/dev/null 2>&1
+wget -q -O limitipvl.service "${GITHUB_REPO}/limitipvl.service" && chmod +x limitipvl.service >/dev/null 2>&1
+wget -q -O limitiptr.service "${GITHUB_REPO}/limitiptr.service" && chmod +x limitiptr.service >/dev/null 2>&1
+wget -q -O limitipss.service "${GITHUB_REPO}/limitipss.service" && chmod +x limitipss.service >/dev/null 2>&1
+cd
+wget -q -O /etc/xray/limit.vmess "${GITHUB_REPO}/vmess" >/dev/null 2>&1
+wget -q -O /etc/xray/limit.vless "${GITHUB_REPO}/vless" >/dev/null 2>&1
+wget -q -O /etc/xray/limit.trojan "${GITHUB_REPO}/trojan" >/dev/null 2>&1
+wget -q -O /etc/xray/limit.shadowsocks "${GITHUB_REPO}/shadowsocks" >/dev/null 2>&1
+wget -q -O /etc/xray/limitip.vmess "${GITHUB_REPO}/ipvmess" >/dev/null 2>&1
+wget -q -O /etc/xray/limitip.vless "${GITHUB_REPO}/ipvless" >/dev/null 2>&1
+wget -q -O /etc/xray/limitip.trojan "${GITHUB_REPO}/iptrojan" >/dev/null 2>&1
+wget -q -O /etc/xray/limitip.shadowsocks "${GITHUB_REPO}/ipshadowsock" >/dev/null 2>&1
+chmod +x /etc/xray/limit.vmess
+chmod +x /etc/xray/limit.vless
+chmod +x /etc/xray/limit.trojan
+chmod +x /etc/xray/limit.shadowsocks
+chmod +x /etc/xray/limitip.vmess
+chmod +x /etc/xray/limitip.vless
+chmod +x /etc/xray/limitip.trojan
+chmod +x /etc/xray/limitip.shadowsocks
+systemctl daemon-reload
+systemctl enable limitipvm >/dev/null 2>&1
+systemctl enable limitipvl >/dev/null 2>&1
+systemctl enable limitiptr >/dev/null 2>&1
+systemctl enable limitipss >/dev/null 2>&1
+systemctl start limitipvm
+systemctl start limitipvl
+systemctl start limitiptr
+systemctl start limitipss
+systemctl restart limitipvm
+systemctl restart limitipvl
+systemctl restart limitiptr
+systemctl restart limitipss
+systemctl enable limitvmess >/dev/null 2>&1
+systemctl enable limitvless >/dev/null 2>&1
+systemctl enable limittrojan >/dev/null 2>&1
+systemctl enable limitshadowsocks >/dev/null 2>&1   
+systemctl start limitvmess
+systemctl start limitvless
+systemctl start limittrojan
+systemctl start limitshadowsocks
+systemctl restart limitvmess
+systemctl restart limitvless
+systemctl restart limittrojan
+systemctl restart limitshadowsocks

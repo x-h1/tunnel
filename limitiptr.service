@@ -1,0 +1,11 @@
+[Unit]
+Description=Limit IP Trojan By XDVPN
+ProjectAfter=network.target
+
+[Service]
+WorkingDirectory=/root
+ExecStart=/etc/xray/limitip.trojan
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
