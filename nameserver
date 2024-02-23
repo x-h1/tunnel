@@ -1,0 +1,25 @@
+#!/bin/sh
+GITHUB_REPO="https://raw.githubusercontent.com/x-h1/tunnel/master/"
+ns_domain_cloudflare() {
+cd
+wget ${GITHUB_REPO}cfnsdomain.sh >/dev/null 2>&1
+chmod +x cfnsdomain.sh && ./cfnsdomain.sh
+}
+
+setup_dnstt() {
+NSVPSKU=$(cat /etc/xray/dns)
+cd
+rm -rf *
+mkdir -p /etc/slowdns
+wget -O dnstt-server "${GITHUB_REPO}dnstt-server" && chmod +x dnstt-server >/dev/null 2>&1
+wget -O dnstt-client "${GITHUB_REPO}dnstt-client" && chmod +x dnstt-client >/dev/null 2>&1
+./dnstt-server -gen-key -privkey-file server.key -pubkey-file server.pub
+chmod +x *
+mv * /etc/slowdns
+wget -O /etc/systemd/system/client.service "${GITHUB_REPO}client.service" >/dev/null 2>&1
+wget -O /etc/systemd/system/server.service "${GITHUB_REPO}server.server" >/dev/null 2>&1
+sed -i "s/xxxx/$NSVPSKU/g" /etc/systemd/system/client.service 
+sed -i "s/xxxx/$NSVPSKU/g" /etc/systemd/system/server.service 
+}
+ns_domain_cloudflare
+setup_dnstt
