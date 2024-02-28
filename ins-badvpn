@@ -2,9 +2,9 @@
 source /root/.gh
 wget -O /usr/bin/badvpn "${GITHUB_REPO}/BadVPN/badvpn" >/dev/null 2>&1
 chmod +x /usr/bin/badvpn > /dev/null 2>&1
-wget -q -O /etc/systemd/system/badvpn1.service "${GITHUB_REPO}/BadVPN/badvpn1.service" >/dev/null 2>&1
-wget -q -O /etc/systemd/system/badvpn2.service "${GITHUB_REPO}/BadVPN/badvpn2.service" >/dev/null 2>&1
-wget -q -O /etc/systemd/system/badvpn3.service "${GITHUB_REPO}/BadVPN/badvpn3.service" >/dev/null 2>&1
+wget -q -O /etc/systemd/system/badvpn1.service "${GITHUB_REPO}/badvpn1.service" >/dev/null 2>&1
+wget -q -O /etc/systemd/system/badvpn2.service "${GITHUB_REPO}/badvpn2.service" >/dev/null 2>&1
+wget -q -O /etc/systemd/system/badvpn3.service "${GITHUB_REPO}/badvpn3.service" >/dev/null 2>&1
 systemctl disable badvpn1 
 systemctl stop badvpn1 
 systemctl enable badvpn1
